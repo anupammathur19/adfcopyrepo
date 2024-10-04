@@ -1,4 +1,4 @@
-name: Windows CI with Python
+name: Install Python on Windows VM
 
 on:
   push:
@@ -9,27 +9,22 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: windows-latest
-    name: Build and Test with Python on Windows VM
-    defaults:
-      run:
-        shell: cmd
-        
+  setup-python:
+    runs-on: self-hosted
+    name: Install Python
+    # This specifies that the job will run on a self-hosted runner named "test"
+    labels: [test]
+    
     steps:
-    - name: Set runner name to "test"
-      run: echo "##[group]::Setting up runner"
-    
-    - name: Checkout code
-      uses: actions/checkout@v3
-    
-    - name: Install Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.x'
-    
-    - name: Verify Python installation
-      run: python --version
-
-    - name: Complete
-      run: echo "Build complete!"
+      - name: Checkout Code
+        uses: actions/checkout@v3
+      
+      - name: Install Python on Windows
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe -OutFile python-installer.exe
+          Start-Process python-installer.exe -ArgumentList '/quiet InstallAllUsers=1 PrependPath=1' -Wait
+          
+      - name: Verify Python Installation
+        run: python --version
+        shell: pwsh
