@@ -1,0 +1,35 @@
+name: Windows CI with Python
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+    name: Build and Test with Python on Windows VM
+    defaults:
+      run:
+        shell: cmd
+        
+    steps:
+    - name: Set runner name to "test"
+      run: echo "##[group]::Setting up runner"
+    
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+    
+    - name: Verify Python installation
+      run: python --version
+
+    - name: Complete
+      run: echo "Build complete!"
