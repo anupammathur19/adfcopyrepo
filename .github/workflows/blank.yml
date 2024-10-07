@@ -10,13 +10,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4.0.4
+
       - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'  # Specify the Python version you want to install
+        uses: actions/setup-python@v5.2.0  # Specify the Python version you want to install
 
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-      - name: Install Databricks CLI
-        run: pip install databricks-cli
+      - name: install-databricks-cli
+        uses: microsoft/install-databricks-cli@v1.0.0
+
+
