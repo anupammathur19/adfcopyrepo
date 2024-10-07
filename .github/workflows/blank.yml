@@ -23,7 +23,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install databricks-cli
-        shell: pwsh
+        shell: powershell
         env:
           pythonLocation: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64
           PKG_CONFIG_PATH: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64/lib/pkgconfig
