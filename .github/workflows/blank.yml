@@ -11,16 +11,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download Python Installer
+        shell: cmd
         run: wget https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe -O python-installer.exe
 
       - name: Install Python
-        run: |
-          start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+        shell: cmd
+        run: start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
 
       - name: Verify Python Installation
+        shell: cmd
         run: python --version
 
       - name: Upgrade pip and install dependencies
-        run: |
-          python -m pip install --upgrade pip
-
+        shell: cmd
+        run: python -m pip install --upgrade pip
