@@ -1,0 +1,9 @@
+{
+	"name": "adf-dev-test123321",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "8603910a-f6a3-4be9-810d-a3f040167364",
+		"tenantId": "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
+	}
+}
