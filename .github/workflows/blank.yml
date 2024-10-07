@@ -10,18 +10,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Python Installer
-        shell: cmd
-        run: wget https://www.python.org/ftp/python/3.10.0/python-3.10.0-amd64.exe -O python-installer.exe
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'  # Specify the version of Python you want to install
 
-      - name: Install Python
-        shell: cmd
-        run: start /wait python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
-
-      - name: Verify Python Installation
-        shell: cmd
-        run: python --version
-
-      - name: Upgrade pip and install dependencies
-        shell: cmd
-        run: python -m pip install --upgrade pip
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
