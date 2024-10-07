@@ -13,8 +13,11 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@v4.0.4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5.2.0  # Specify the Python version you want to install
+
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
       - name: install-databricks-cli
         uses: microsoft/install-databricks-cli@v1.0.0
