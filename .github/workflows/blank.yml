@@ -1,40 +1,82 @@
-name: learn-github-actions
+name: Azure Data Factory CI/CD Pipeline
 
-on: [push]
+on:
+  push:
+    branches:
+      - adf_publish
+  workflow_dispatch:
 
 jobs:
-  setup-python:
+  # Continuous Integration (CI) Stage
+  build:
     runs-on: self-hosted
+    environment: production
+    defaults:
+      run:
+        working-directory: ./adfcopyrepo/
+    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Create Artifact
+      run: |
+        mkdir -p ${{ github.workspace }}/artifact
+        cp ./ARMTemplateForFactory.json ${{ github.workspace }}/artifact/
+        cp ./ARMTemplateParametersForFactory.json ${{ github.workspace }}/artifact/
+        cp ./pre_post_deployment.ps1 ${{ github.workspace }}/artifact/
+
+    - name: Upload Build Artifact
+      uses: actions/upload-artifact@v3.0.2
+      with:
+        name: ExportedArmTemplate
+        path: ${{ github.workspace }}/artifact
+
+  # Continuous Deployment (CD) Stage
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: production
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+    - name: Download Build Artifact
+      uses: actions/download-artifact@v3.0.2
+      with:
+        name: ExportedArmTemplate
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4.0.4
+    - name: Azure Login
+      uses: Azure/login@v1.4.3
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
+    - name: Azure PowerShell Pre-deployment
+      uses: Azure/powershell@v1
+      with:
+        inlineScript: ./artifact/pre_post_deployment.ps1 -armTemplate "./artifact/ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName adf-dev-test123321 -predeployment $true -deleteDeployment $false
+        azPSVersion: "latest"
+        errorActionPreference: Stop
 
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+    - name: Deploy Azure Resource Manager (ARM) Template
+      uses: Azure/arm-deploy@v2
+      with:
+        scope: 'resourcegroup'
+        subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
+        resourceGroupName: 'Anupam_rg'
+        template: ./artifact/ARMTemplateForFactory.json
+        parameters: ./artifact/ARMTemplateParametersForFactory.json
+        deploymentMode: Incremental
+        deploymentName: adf-deployment
+        additionalArguments: |
+          -p factoryName=adf-dev-test123321
+          -p linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstorageacc1234567.blob.core.windows.net/"
 
-      - name: Install Databricks CLI
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install databricks-cli
-        shell: powershell
-        env:
-          pythonLocation: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64
-          PKG_CONFIG_PATH: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64/lib/pkgconfig
-          Python_ROOT_DIR: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64
-          Python2_ROOT_DIR: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64
-          Python3_ROOT_DIR: C:\Users\Administrator\actions-runner\_work\_tool\Python\3.12.7\x64
+    - name: Azure PowerShell Post-deployment
+      uses: Azure/powershell@v1
+      with:
+        inlineScript: ./artifact/pre_post_deployment.ps1 -armTemplate "./artifact/ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName adf-dev-test123321 -predeployment $false -deleteDeployment $true
+        azPSVersion: "latest"
+        errorActionPreference: Stop
 
-      - name: Azure CLI Action
-        uses: Azure/cli@v2.1.0
-
-          
           
 
 
