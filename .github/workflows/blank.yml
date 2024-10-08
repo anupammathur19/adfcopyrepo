@@ -28,7 +28,7 @@ jobs:
       uses: actions/upload-artifact@v4.4.2
       with:
         name: ExportedArmTemplate
-        path: ${{ github.workspace }}\artifact
+        path: .
 
   # Continuous Deployment (CD) Stage
   release:
