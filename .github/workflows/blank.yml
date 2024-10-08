@@ -41,6 +41,7 @@ jobs:
       uses: Azure/login@v2.2.0
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        enable-AzPSSession: true
 
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v1
