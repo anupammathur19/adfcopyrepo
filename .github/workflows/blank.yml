@@ -16,14 +16,6 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Create Artifact
-      shell: powershell
-      run: |
-        New-Item -Path "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\artifact" -ItemType Directory -Force
-        Copy-Item -Path .\ARMTemplateForFactory.json -Destination "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\artifact\"
-        Copy-Item -Path .\ARMTemplateParametersForFactory.json -Destination "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\artifact\"
-        Copy-Item -Path .\pre_post_deployment.ps1 -Destination "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\artifact\"
-
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4.4.2
       with:
