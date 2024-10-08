@@ -25,9 +25,9 @@ jobs:
         cp ./ARMTemplateForFactory.json ${{ github.workspace }}/artifact/
         cp ./ARMTemplateParametersForFactory.json ${{ github.workspace }}/artifact/
         cp ./pre_post_deployment.ps1 ${{ github.workspace }}/artifact/
-
+    
     - name: Upload Build Artifact
-      uses: actions/upload-artifact@v3.0.2
+      uses: actions/upload-artifact@v4.4.2
       with:
         name: ExportedArmTemplate
         path: ${{ github.workspace }}/artifact
