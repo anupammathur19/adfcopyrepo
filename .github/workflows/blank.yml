@@ -17,39 +17,40 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Create Artifact
+      shell: powershell
       run: |
-        mkdir -p ${{ github.workspace }}/artifact
-        cp ./ARMTemplateForFactory.json ${{ github.workspace }}/artifact/
-        cp ./ARMTemplateParametersForFactory.json ${{ github.workspace }}/artifact/
-        cp ./pre_post_deployment.ps1 ${{ github.workspace }}/artifact/
-    
+        New-Item -Path "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\adfcopyrepo\artifact" -ItemType Directory -Force
+        Copy-Item -Path .\ARMTemplateForFactory.json -Destination "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\adfcopyrepo\artifact\"
+        Copy-Item -Path .\ARMTemplateParametersForFactory.json -Destination "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\adfcopyrepo\artifact\"
+        Copy-Item -Path .\pre_post_deployment.ps1 -Destination "$env:USERPROFILE\actions-runner\_work\adfcopyrepo\adfcopyrepo\artifact\"
+
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4.4.2
       with:
         name: ExportedArmTemplate
-        path: ${{ github.workspace }}/artifact
+        path: ${{ github.workspace }}\artifact
 
   # Continuous Deployment (CD) Stage
   release:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment: production
 
     steps:
     - name: Download Build Artifact
-      uses: actions/download-artifact@v3.0.2
+      uses: actions/download-artifact@v4.1.8
       with:
         name: ExportedArmTemplate
 
     - name: Azure Login
-      uses: Azure/login@v1.4.3
+      uses: Azure/login@v2.2.0
       with:
         creds: '${{ secrets.AZURE_CREDENTIALS }}'
 
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v1
       with:
-        inlineScript: ./artifact/pre_post_deployment.ps1 -armTemplate "./artifact/ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName adf-dev-test123321 -predeployment $true -deleteDeployment $false
+        inlineScript: .\artifact\pre_post_deployment.ps1 -armTemplate ".\artifact\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
         azPSVersion: "latest"
         errorActionPreference: Stop
 
@@ -59,21 +60,17 @@ jobs:
         scope: 'resourcegroup'
         subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
         resourceGroupName: 'Anupam_rg'
-        template: ./artifact/ARMTemplateForFactory.json
-        parameters: ./artifact/ARMTemplateParametersForFactory.json
+        template: .\artifact\ARMTemplateForFactory.json
+        parameters: .\artifact\ARMTemplateParametersForFactory.json
         deploymentMode: Incremental
         deploymentName: adf-deployment
         additionalArguments: |
-          -p factoryName=adf-dev-test123321
-          -p linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstorageacc1234567.blob.core.windows.net/"
+          -p factoryName=prod-datafactory11
+          -p linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
 
     - name: Azure PowerShell Post-deployment
       uses: Azure/powershell@v1
       with:
-        inlineScript: ./artifact/pre_post_deployment.ps1 -armTemplate "./artifact/ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName adf-dev-test123321 -predeployment $false -deleteDeployment $true
+        inlineScript: .\artifact\pre_post_deployment.ps1 -armTemplate ".\artifact\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $false -deleteDeployment $true
         azPSVersion: "latest"
         errorActionPreference: Stop
-
-          
-
-
