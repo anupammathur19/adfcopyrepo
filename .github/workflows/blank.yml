@@ -29,8 +29,11 @@ jobs:
           # Install PowerShell silently
           Start-Process msiexec.exe -ArgumentList '/i PowerShell-7.3.7-win-x64.msi /quiet /norestart' -Wait
           
+          # Add PowerShell Core to the PATH for the current session
+          $env:Path += ";$($env:ProgramFiles)\PowerShell\7"
+          
           # Verify PowerShell Core installation
-          pwsh -Command "$PSVersionTable"
+          & "$($env:ProgramFiles)\PowerShell\7\pwsh.exe" -Command "$PSVersionTable"
 
 
   
