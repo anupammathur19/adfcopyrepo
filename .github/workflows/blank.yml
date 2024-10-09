@@ -17,12 +17,44 @@ jobs:
       uses: actions/checkout@v3
 
 
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v4.4.2
-      with:
-        name: ExportedArmTemplate
-        path: ${{ github.workspace }}
+    # - name: Upload Build Artifact
+    #   uses: actions/upload-artifact@v4.4.2
+    #   with:
+    #     name: ExportedArmTemplate
+    #     path: ${{ github.workspace }}
+    
 
+
+      # Step 2: Copy all files to a staging directory
+    - name: Copy files to artifact staging directory
+      run: |
+          # Define paths
+          export SOURCE_DIR="${{ github.workspace }}"
+          export TARGET_DIR="${{ github.workspace }}/artifact_staging"
+          
+          # Create the target directory
+          mkdir -p $TARGET_DIR
+
+          # Copy contents
+          cp -r $SOURCE_DIR/* $TARGET_DIR/
+
+      # Step 3: Upload the artifact to GitHub Actions (optional for local runner)
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+          name: adf_publish_artifact
+          path: artifact_staging/
+
+      # Step 4: Save artifact on self-hosted runner for adf_publish branch
+    - name: Save artifact locally on self-hosted runner
+      if: github.ref == 'refs/heads/adf_publish'
+      run: |
+          # Create a local directory on the runner to save the artifact
+          LOCAL_SAVE_DIR="${{ github.workspace }}/adf_publish_artifact"
+          mkdir -p $LOCAL_SAVE_DIR
+          
+          # Copy artifact to the local directory
+          cp -r artifact_staging/* $LOCAL_SAVE_DIR/    
       
 
   # Continuous Deployment (CD) Stage
