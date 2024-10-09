@@ -16,8 +16,6 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Azure PowerShell Action
-      uses: Azure/powershell@v2
   
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4.4.2
@@ -49,7 +47,7 @@ jobs:
         auth-type: SERVICE_PRINCIPAL
 
     - name: Azure PowerShell Pre-deployment
-      uses: Azure/powershell@v1
+      uses: Azure/powershell@v2
       with:
         inlineScript: ${{ github.workspace }}\pre_post_deployment.ps1 -armTemplate "${{ github.workspace }}\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
         azPSVersion: "latest"
