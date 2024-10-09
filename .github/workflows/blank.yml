@@ -2,9 +2,8 @@ name: Azure Data Factory CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - adf_publish
-  workflow_dispatch:
+    branches: ["adf_publish"]
+
 
 jobs:
   # Continuous Integration (CI) Stage
