@@ -63,7 +63,7 @@ jobs:
 
 
     - name: Azure PowerShell Pre-deployment
-      uses: Azure/powershell@v1
+      uses: Azure/powershell@v2
       with:
         inlineScript: |
           & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
