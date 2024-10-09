@@ -59,7 +59,7 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v1
       with:
-        inlineScript: .\artifact\pre_post_deployment.ps1 -armTemplate ".\artifact\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
+        inlineScript: ${{ github.workspace }}\pre_post_deployment.ps1 -armTemplate "${{ github.workspace }}\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
         azPSVersion: "latest"
         errorActionPreference: Stop
 
@@ -69,8 +69,8 @@ jobs:
         scope: 'resourcegroup'
         subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
         resourceGroupName: 'Anupam_rg'
-        template: .\artifact\ARMTemplateForFactory.json
-        parameters: .\artifact\ARMTemplateParametersForFactory.json
+        template: ${{ github.workspace }}\ARMTemplateForFactory.json
+        parameters: ${{ github.workspace }}\ARMTemplateParametersForFactory.json
         deploymentMode: Incremental
         deploymentName: adf-deployment
         additionalArguments: |
@@ -80,6 +80,6 @@ jobs:
     - name: Azure PowerShell Post-deployment
       uses: Azure/powershell@v1
       with:
-        inlineScript: .\artifact\pre_post_deployment.ps1 -armTemplate ".\artifact\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $false -deleteDeployment $true
+        inlineScript: ${{ github.workspace }}\pre_post_deployment.ps1 -armTemplate "${{ github.workspace }}\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $false -deleteDeployment $true
         azPSVersion: "latest"
         errorActionPreference: Stop
