@@ -20,6 +20,18 @@ jobs:
       uses: actions/checkout@v3
       with:
         ref: adf_publish 
+        
+    - name: Install PowerShell Core
+      run: |
+          # Download the PowerShell installer
+          Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.3.7/PowerShell-7.3.7-win-x64.msi -OutFile PowerShell-7.3.7-win-x64.msi
+          
+          # Install PowerShell silently
+          Start-Process msiexec.exe -ArgumentList '/i PowerShell-7.3.7-win-x64.msi /quiet /norestart' -Wait
+          
+          # Verify PowerShell Core installation
+          pwsh -Command "$PSVersionTable"
+
 
   
     - name: Upload Build Artifact
