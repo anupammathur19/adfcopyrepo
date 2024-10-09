@@ -50,7 +50,7 @@ jobs:
         environment: AzureCloud
         allow-no-subscriptions: false
         audience: api://AzureADTokenExchange
-        auth-type: spn
+        auth-type: SERVICE_PRINCIPAL
 
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v1
