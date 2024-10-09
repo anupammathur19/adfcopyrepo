@@ -54,7 +54,7 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v2
       with:
-        inlineScript: ${{ github.workspace }}\pre_post_deployment.ps1 -armTemplate "${{ github.workspace }}\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
+        inlineScript: .\pre_post_deployment.ps1 -armTemplate ".\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
         azPSVersion: "latest"
         errorActionPreference: Stop
 
@@ -64,8 +64,8 @@ jobs:
         scope: 'resourcegroup'
         subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
         resourceGroupName: 'Anupam_rg'
-        template: ${{ github.workspace }}\ARMTemplateForFactory.json
-        parameters: ${{ github.workspace }}\ARMTemplateParametersForFactory.json
+        template: .\ARMTemplateForFactory.json
+        parameters: .\ARMTemplateParametersForFactory.json
         deploymentMode: Incremental
         deploymentName: adf-deployment
         additionalArguments: |
