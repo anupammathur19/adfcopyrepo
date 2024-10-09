@@ -63,7 +63,8 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v2
       with:
-        inlineScript: C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1 -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
+        inlineScript: |
+          & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
         azPSVersion: "latest"
         errorActionPreference: Stop
     
@@ -73,8 +74,8 @@ jobs:
         scope: 'resourcegroup'
         subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
         resourceGroupName: 'Anupam_rg'
-        template: C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json
-        parameters: C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateParametersForFactory.json
+        template: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateForFactory.json"
+        parameters: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateParametersForFactory.json"
         deploymentMode: Incremental
         deploymentName: adf-deployment
         additionalArguments: |
@@ -84,9 +85,11 @@ jobs:
     - name: Azure PowerShell Post-deployment
       uses: Azure/powershell@v1
       with:
-        inlineScript: C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1 -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $false -deleteDeployment $true
+        inlineScript: |
+          & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $false -deleteDeployment $true
         azPSVersion: "latest"
         errorActionPreference: Stop
+
 
       
 
