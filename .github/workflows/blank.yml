@@ -63,12 +63,13 @@ jobs:
 
 
     - name: Azure PowerShell Pre-deployment
-      uses: Azure/powershell@v2
-      with:
-        inlineScript: |
-          & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
-        azPSVersion: "latest"
-        errorActionPreference: Stop
+      run: pwsh -File 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName 'Anupam_rg' -DataFactoryName 'prod-datafactory11' -predeployment $true -deleteDeployment $false
+      # uses: Azure/powershell@v2
+      # with:
+      #   inlineScript: |
+      #     & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
+      #   azPSVersion: "latest"
+      #   errorActionPreference: Stop
 
     
     - name: Deploy Azure Resource Manager (ARM) Template
