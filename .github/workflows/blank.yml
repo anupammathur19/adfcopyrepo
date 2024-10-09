@@ -37,11 +37,21 @@ jobs:
       with:
         name: ExportedArmTemplate
 
+    - name: Install Azure CLI
+      run: |
+        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash  # For Linux
+        # For Windows use this command:
+        # Invoke-WebRequest -Uri https://aka.ms/installazurecliwindows -OutFile AzureCLI.msi; Start-Process msiexec.exe -Wait -ArgumentList '/I AzureCLI.msi /quiet'
+
     - name: Azure Login
-      uses: Azure/login@v2.2.0
+      uses: azure/login@v2.2.0
       with:
-        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
         enable-AzPSSession: true
+        environment: AzureCloud
+        allow-no-subscriptions: false
+        audience: api://AzureADTokenExchange
+        auth-type: spn
 
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v1
