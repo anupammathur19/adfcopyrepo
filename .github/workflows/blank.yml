@@ -3,11 +3,6 @@ name: Azure Data Factory CI/CD Pipeline
 on:
   push:
     branches: ["adf_publish"]
-  workflow_dispatch:
-  
-  
-
-
 jobs:
   # Continuous Integration (CI) Stage
   build:
@@ -54,7 +49,7 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       uses: Azure/powershell@v2
       with:
-        inlineScript: .\pre_post_deployment.ps1 -armTemplate ".\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
+        inlineScript: .\adf-dev-test123321\pre_post_deployment.ps1 -armTemplate ".\ARMTemplateForFactory.json" -ResourceGroupName Anupam_rg -DataFactoryName prod-datafactory11 -predeployment $true -deleteDeployment $false
         azPSVersion: "latest"
         errorActionPreference: Stop
 
