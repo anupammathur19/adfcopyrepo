@@ -16,7 +16,9 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v3
 
-
+    - name: Azure PowerShell Action
+      uses: Azure/powershell@v2
+  
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4.4.2
       with:
