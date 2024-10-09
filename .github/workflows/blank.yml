@@ -3,8 +3,8 @@ name: Azure Data Factory CI/CD Pipeline
 on:
   push:
     branches:
-      - main
-
+      - adf_publish
+  workflow_dispatch:
 
 jobs:
   # Continuous Integration (CI) Stage
@@ -31,7 +31,7 @@ jobs:
       uses: actions/upload-artifact@v4.4.2
       with:
         name: ExportedArmTemplate
-        path: .
+        path: ${{ github.workspace }}
 
       
 
