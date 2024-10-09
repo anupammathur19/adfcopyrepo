@@ -3,6 +3,7 @@ name: Azure Data Factory CI/CD Pipeline
 on:
   push:
     branches: ["adf_publish"]
+  workflow-dispatch :  
 
 
 jobs:
