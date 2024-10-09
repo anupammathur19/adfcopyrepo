@@ -61,10 +61,19 @@ jobs:
       run: |
         Get-ChildItem -Recurse | Select-Object FullName
 
-
     - name: Azure PowerShell Pre-deployment
-      shell: powershell 
-      run: powershell -Command "C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1 -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName 'Anupam_rg' -DataFactoryName 'prod-datafactory11' -predeployment:$true -deleteDeployment:$false"
+      shell: powershell
+      run: |
+        powershell -Command "& {
+          $armTemplate = 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json'
+          $resourceGroupName = 'Anupam_rg'
+          $dataFactoryName = 'prod-datafactory11'
+          & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate $armTemplate -ResourceGroupName $resourceGroupName -DataFactoryName $dataFactoryName -predeployment $true -deleteDeployment $false
+        }"
+
+    # - name: Azure PowerShell Pre-deployment
+    #   shell: powershell 
+    #   run: powershell -Command "C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1 -armTemplate 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json' -ResourceGroupName 'Anupam_rg' -DataFactoryName 'prod-datafactory11' -predeployment:$true -deleteDeployment:$false"
       # uses: Azure/powershell@v2
       # with:
       #   inlineScript: |
