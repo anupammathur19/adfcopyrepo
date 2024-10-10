@@ -68,14 +68,14 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       shell: powershell
       run: |
-        # Parse the JSON secret
-        $credentialsJson = "${{ secrets.AZURE_CREDENTIALS }}"
-        $creds = $credentialsJson | ConvertFrom-Json
+        # # Parse the JSON secret
+        # $credentialsJson = "${{ secrets.AZURE_CREDENTIALS }}"
+        # $creds = $credentialsJson | ConvertFrom-Json
     
         # Extract values
-        $clientId = $creds.clientId
-        $tenantId = $creds.tenantId
-        $clientSecret = $creds.clientSecret
+        $clientId = "7ba1657d-ab36-4b28-b016-57ed4092be2f"
+        $tenantId = "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
+        $clientSecret = "RM28Q~J9sXPb0qx49HWsk4ZE7My2ds3KSAQiaaQL"
     
         # Convert client secret to a secure string
         $securePassword = ConvertTo-SecureString $clientSecret -AsPlainText -Force
