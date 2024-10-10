@@ -95,9 +95,9 @@ jobs:
         parameters: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateParametersForFactory.json"
         deploymentMode: Incremental
         deploymentName: adf-deployment
-        additionalArguments: |
+        override-parameter: |
           -p factoryName=prod-datafactory11
-          -p AzureBlobStorage2_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
+          -p linkserviceAzureBlobStorage2_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
 
 
 
