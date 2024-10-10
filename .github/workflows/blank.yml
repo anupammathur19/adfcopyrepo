@@ -68,6 +68,7 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       shell: powershell
       run: |
+        Connect-AzAccount -ServicePrincipal -Credential  ${{ secrets.AZURE_CREDENTIALS }}
         $armTemplate = 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json'
         $resourceGroupName = 'Anupam_rg'
         $dataFactoryName = 'prod-datafactory11'
