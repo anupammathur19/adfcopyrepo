@@ -62,12 +62,11 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         environment: AzureCloud
-        enable-AzPSSession: true
         audience: api://AzureADTokenExchange
         auth-type: SERVICE_PRINCIPAL
 
     - name: Azure PowerShell Pre-deployment
-      shell: powershell
+      shell: cmd
       run: |
         $armTemplate = 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json'
         $resourceGroupName = 'Anupam_rg'
