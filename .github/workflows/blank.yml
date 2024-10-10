@@ -63,30 +63,12 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
         environment: AzureCloud
         enble-AzPSSession: true
-        # audience: api://AzureADTokenExchange
-        # auth-type: SERVICE_PRINCIPAL
+        audience: api://AzureADTokenExchange
+        auth-type: SERVICE_PRINCIPAL
 
     - name: Azure PowerShell Pre-deployment
       shell: powershell
       run: |
-        # # Parse the JSON secret
-        # $credentialsJson = "${{ secrets.AZURE_CREDENTIALS }}"
-        # $creds = $credentialsJson | ConvertFrom-Json
-    
-        # # Extract values
-        # $clientId = "7ba1657d-ab36-4b28-b016-57ed4092be2f"
-        # $tenantId = "e4e34038-ea1f-4882-b6e8-ccd776459ca0"
-        # $clientSecret = "RM28Q~J9sXPb0qx49HWsk4ZE7My2ds3KSAQiaaQL"
-    
-        # # Convert client secret to a secure string
-        # $securePassword = ConvertTo-SecureString $clientSecret -AsPlainText -Force
-    
-        # # Create a credential object
-        # $credential = New-Object System.Management.Automation.PSCredential ($clientId, $securePassword)
-    
-        # # Log in to Azure using the service principal
-        # Connect-AzAccount -ServicePrincipal -Credential $credential -TenantId $tenantId
-
         $armTemplate = 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json'
         $resourceGroupName = 'Anupam_rg'
         $dataFactoryName = 'prod-datafactory11'
