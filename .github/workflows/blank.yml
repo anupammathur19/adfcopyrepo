@@ -68,7 +68,24 @@ jobs:
     - name: Azure PowerShell Pre-deployment
       shell: powershell
       run: |
-        Connect-AzAccount -ServicePrincipal -Credential  ${{ secrets.AZURE_CREDENTIALS }}
+        # Parse the JSON secret
+        $credentialsJson = "${{ secrets.AZURE_CREDENTIALS }}"
+        $creds = $credentialsJson | ConvertFrom-Json
+    
+        # Extract values
+        $clientId = $creds.clientId
+        $tenantId = $creds.tenantId
+        $clientSecret = $creds.clientSecret
+    
+        # Convert client secret to a secure string
+        $securePassword = ConvertTo-SecureString $clientSecret -AsPlainText -Force
+    
+        # Create a credential object
+        $credential = New-Object System.Management.Automation.PSCredential ($clientId, $securePassword)
+    
+        # Log in to Azure using the service principal
+        Connect-AzAccount -ServicePrincipal -Credential $credential -TenantId $tenantId
+
         $armTemplate = 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json'
         $resourceGroupName = 'Anupam_rg'
         $dataFactoryName = 'prod-datafactory11'
