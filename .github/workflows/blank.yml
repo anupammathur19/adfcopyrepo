@@ -97,7 +97,7 @@ jobs:
         deploymentName: adf-deployment
         additionalArguments: |
           -p factoryName=prod-datafactory11
-          -p linkserviceAzureBlobStorage2_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
+          -p linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
 
 
 
