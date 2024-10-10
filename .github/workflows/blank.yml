@@ -91,8 +91,8 @@ jobs:
         scope: 'resourcegroup'
         subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
         resourceGroupName: 'Anupam_rg'
-        template: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateForFactory.json"
-        parameters: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateParametersForFactory.json"
+        template: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateForFactory.json" 
+        parameters: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateParametersForFactory.json" 
         deploymentMode: Incremental
         deploymentName: adf-deployment
         additionalArguments: |
