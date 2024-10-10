@@ -91,13 +91,13 @@ jobs:
         scope: 'resourcegroup'
         subscriptionId: '99705b85-b557-494c-bc4b-73e0ca27df77'
         resourceGroupName: 'Anupam_rg'
-        template: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateForFactory.json" 
-        parameters: "${{ github.workspace }}/adf-dev-test123321/ARMTemplateParametersForFactory.json" 
+        template: ${{ github.workspace }}/adf-dev-test123321/ARMTemplateForFactory.json factoryName=prod-datafactory11
+        parameters: ${{ github.workspace }}/adf-dev-test123321/ARMTemplateParametersForFactory.json linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
         deploymentMode: Incremental
         deploymentName: adf-deployment
-        additionalArguments: |
-          -p factoryName=prod-datafactory11
-          -p linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
+        # additionalArguments: |
+        #   -p factoryName=prod-datafactory11
+        #   -p linkserviceAzureBlobStorage1_properties_typeProperties_serviceEndpoint="https://prodstg1232123.blob.core.windows.net/"
 
 
 
