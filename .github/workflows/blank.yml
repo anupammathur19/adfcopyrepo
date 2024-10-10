@@ -21,15 +21,6 @@ jobs:
       with:
         ref: adf_publish 
 
-
-    - name: Install Azure PowerShell Module
-      shell: powershell
-      run: |
-        Install-Module -Name Az -Scope CurrentUser -AllowClobber -Force
-        Import-Module Az
-        
-
-
   
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v4.4.2
