@@ -107,7 +107,7 @@ jobs:
         $armTemplate = 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\ARMTemplateForFactory.json'
         $resourceGroupName = 'Anupam_rg'
         $dataFactoryName = 'prod-datafactory11'
-        & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate $armTemplate -ResourceGroupName $resourceGroupName -DataFactoryName $dataFactoryName -predeployment $false -deleteDeployment $false
+        & 'C:\Users\Administrator\actions-runner\_work\adfcopyrepo\adfcopyrepo\adf-dev-test123321\pre_post_deployment.ps1' -armTemplate $armTemplate -ResourceGroupName $resourceGroupName -DataFactoryName $dataFactoryName -predeployment $false -deleteDeployment $true
     
     # - name: Azure PowerShell Post-deployment
     #   uses: Azure/powershell@v1
